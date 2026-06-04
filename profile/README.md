@@ -43,7 +43,7 @@ Spry replaces the flat fee with a curve that prices each swap by its *own* contr
 - **Path-independence.** The fee is the integral of the curve over that path, so splitting one big swap into many small ones within a block costs **at least as much** — closing the multicall/sandwich-splitting loophole.
 - **LP-friendly unwinds.** Swaps that push the pool back toward neutral pay only the base rate.
 
-The full derivation lives in the [whitepaper](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md).
+The full derivation lives in the whitepaper — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (figure-driven) or [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md).
 
 ## For liquidity providers
 
@@ -75,7 +75,7 @@ forge test         # 256 tests across unit / integration / scenarios / fuzz / fo
 
 ## Resources
 
-- 📄 **Whitepaper** — [`assets/Spry-Whitepaper.md`](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md)
+- 📄 **Whitepaper** — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
 - 💻 **Contracts** — [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
 
 ## License
