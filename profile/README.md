@@ -81,7 +81,7 @@ On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinan
 
 - 📄 **Whitepaper** — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
 - 💻 **Contracts** — [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
-- 📊 **Subgraph** — [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph) — The Graph indexer for pools, dynamic fees & fee-curve analytics
+- 📊 **Subgraph** — [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)
 
 ## License
 
