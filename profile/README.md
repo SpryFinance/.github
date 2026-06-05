@@ -69,6 +69,10 @@ forge test         # 264 tests across unit / integration / scenarios / fuzz / fo
 
 **Core surface:** `SpryHook` (dispatch + per-pool cumulative state), `SpryRouter` (swap-only), and the `SmartFeeLib` / `SpryFeeTypes` / `VirtualReserves` libraries.
 
+## Data & analytics
+
+On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)** — a fork of Uniswap's `v4-subgraph` that captures Spry pools, per-swap dynamic fees, tier stats, and the hook's `SpryFee` telemetry (signed cumulative · zone · dispatch case). Query pools, swaps, and fee distributions over GraphQL.
+
 ## Project status
 
 > ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
@@ -77,6 +81,7 @@ forge test         # 264 tests across unit / integration / scenarios / fuzz / fo
 
 - 📄 **Whitepaper** — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
 - 💻 **Contracts** — [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
+- 📊 **Subgraph** — [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph) — The Graph indexer for pools, dynamic fees & fee-curve analytics
 
 ## License
 
