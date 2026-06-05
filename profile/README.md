@@ -16,13 +16,13 @@
 
 ## What is Spry?
 
-Spry is a **Uniswap V4 hook**: a small contract that V4's singleton `PoolManager` consults on every swap to set the fee. Instead of one flat fee, a Spry pool charges a fee that scales with how much each trade moves the price — and with how much the *whole block* has already moved it.
+Spry is a **Uniswap V4 hook**: a small contract that V4's singleton `PoolManager` consults on every swap to set the fee. Instead of one flat fee, a Spry pool charges a fee that scales with how much each trade moves the price, and with how much the *whole block* has already moved it.
 
 Ordinary trades pay a low base rate. Large, arbitrage- and MEV-sized swaps pay much more, and that excess flows back to liquidity providers through V4's standard fee channel. The result: LPs are compensated for the impermanent loss those swaps would otherwise inflict.
 
 ## Why it exists
 
-Constant-product AMMs leak value to arbitrageurs every time the price moves — that's impermanent loss. A flat fee (e.g. 0.30%) compensates badly: it's too high on tiny trades and far too low on the large rebalances that actually cause IL, so small traders end up subsidizing the cost created by big ones.
+Constant-product AMMs leak value to arbitrageurs every time the price moves. That's impermanent loss. A flat fee (e.g. 0.30%) compensates badly: it's too high on tiny trades and far too low on the large rebalances that actually cause IL, so small traders end up subsidizing the cost created by big ones.
 
 Spry replaces the flat fee with a curve that prices each swap by its *own* contribution to IL, so the takers causing the loss are the ones paying for it.
 
@@ -38,20 +38,20 @@ Spry replaces the flat fee with a curve that prices each swap by its *own* contr
   | VOLATILE | 200 | ETH/SHIB | 0.50% |
   | EXOTIC | 1000 | low-cap pairs | 1.00% |
 
-- **A four-zone curve per tier** — flat *safe* zone, a *linear* ramp, an *exponential* ramp, then a *cap* (up to 9.9%) — so the fee rises smoothly as a swap pushes the pool further from fair price.
+- **A four-zone curve per tier.** A flat *safe* zone, a *linear* ramp, an *exponential* ramp, then a *cap* (up to 9.9%), so the fee rises smoothly as a swap pushes the pool further from fair price.
 - **Block-windowed MEV protection.** Each pool keeps a running cumulative of the block's net price shift; a swap is priced over the *path* it traverses, not in isolation.
-- **Path-independence.** The fee is the integral of the curve over that path, so splitting one big swap into many small ones within a block costs **at least as much** — closing the multicall/sandwich-splitting loophole.
+- **Path-independence.** The fee is the integral of the curve over that path, so splitting one big swap into many small ones within a block costs **at least as much**, closing the multicall/sandwich-splitting loophole.
 - **LP-friendly unwinds.** Swaps that push the pool back toward neutral pay only the base rate.
 
-The full derivation lives in the whitepaper — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (figure-driven) or [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md).
+The full derivation lives in the whitepaper: [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (figure-driven) or [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md).
 
 ## For liquidity providers
 
-You provide liquidity through Uniswap's canonical V4 **`PositionManager`** — no custom Spry LP contract, no new token to hold. Your position is a standard ERC-721, with per-position fee accounting handled by V4. The dynamic fee simply means a larger share of arbitrage flow accrues to you.
+You provide liquidity through Uniswap's canonical V4 **`PositionManager`**: no custom Spry LP contract, no new token to hold. Your position is a standard ERC-721, with per-position fee accounting handled by V4. The dynamic fee simply means a larger share of arbitrage flow accrues to you.
 
 ## For traders & integrators
 
-Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them** — the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support.
+Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them**, and the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support.
 
 ## For developers
 
@@ -71,7 +71,7 @@ forge test         # 264 tests across unit / integration / scenarios / fuzz / fo
 
 ## Data & analytics
 
-On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)** — a fork of Uniswap's `v4-subgraph` that captures Spry pools, per-swap dynamic fees, tier stats, and the hook's `SpryFee` telemetry (signed cumulative · zone · dispatch case). Query pools, swaps, and fee distributions over GraphQL.
+On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)**, a fork of Uniswap's `v4-subgraph` that captures Spry pools, per-swap dynamic fees, tier stats, and the hook's `SpryFee` telemetry (signed cumulative · zone · dispatch case). Query pools, swaps, and fee distributions over GraphQL.
 
 ## Project status
 
@@ -79,9 +79,9 @@ On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinan
 
 ## Resources
 
-- 📄 **Whitepaper** — [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
-- 💻 **Contracts** — [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
-- 📊 **Subgraph** — [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)
+- 📄 **Whitepaper**: [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
+- 💻 **Contracts**: [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
+- 📊 **Subgraph**: [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)
 
 ## License
 
