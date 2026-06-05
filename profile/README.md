@@ -62,7 +62,7 @@ git clone https://github.com/SpryFinance/spry-contracts
 cd spry-contracts
 forge install      # v4-core, v4-periphery, OpenZeppelin, PRB-Math, Permit2
 forge build
-forge test         # 256 tests across unit / integration / scenarios / fuzz / fork
+forge test         # 264 tests across unit / integration / scenarios / fuzz / fork
 ```
 
 **Wiring a pool to Spry:** deploy `SpryHook` at a mined CREATE2 address (low 14 bits = `BEFORE_SWAP_FLAG`), then `initialize` a pool with `fee = DYNAMIC_FEE_FLAG` and `tickSpacing` set to your chosen tier. Liquidity goes through `PositionManager`; swaps through any V4 router. See `script/DeploySpry.s.sol`.
@@ -71,7 +71,7 @@ forge test         # 256 tests across unit / integration / scenarios / fuzz / fo
 
 ## Project status
 
-> ⚠️ **Pre-production.** The contracts are extensively tested (256 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
+> ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
 
 ## Resources
 
