@@ -8,6 +8,7 @@
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://github.com/SpryFinance/spry-contracts/blob/main/LICENSE)
 [![Built on Uniswap V4](https://img.shields.io/badge/Built%20on-Uniswap%20V4-ff007a.svg)](https://github.com/Uniswap/v4-core)
+[![App: Spry interface](https://img.shields.io/badge/app-Spry%20interface-2ea44f.svg)](https://github.com/SpryFinance/spry-interface)
 ![Status: testnet / pre-audit](https://img.shields.io/badge/status-testnet%20%C2%B7%20pre--audit-orange.svg)
 
 </div>
@@ -45,17 +46,38 @@ Spry replaces the flat fee with a curve that prices each swap by its *own* contr
 
 The full derivation lives in the whitepaper: [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (figure-driven) or [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md).
 
+## The Spry app
+
+[`spry-interface`](https://github.com/SpryFinance/spry-interface) is a Spry-native fork of the Uniswap interface, trimmed to Uniswap V4 and wired to run on **Base Sepolia**. It is a complete LP and trading surface for Spry pools, with no extra contracts to learn:
+
+- **Provide liquidity, end to end.** Open a position in an existing Spry pool or create a brand-new pool, then add, remove, and collect fees, all on Uniswap V4 through the canonical `PositionManager` and Permit2.
+- **Your positions, live.** Balances, uncollected fees, and status are read straight from the chain and the subgraph, each shown with its dynamic-fee tier and the pool's "alert" and "danger" zone counts.
+- **Pick a tier, not a number.** The create flow presents the five Spry tiers with their fee bands and a log-scale fee curve, instead of a single fixed-fee dropdown.
+- **Swap** against Spry pools, with quoting and approvals handled for the testnet.
+- **Find any token** by symbol or address, resolved from the subgraph and on-chain ERC-20 metadata.
+
+Run it locally:
+
+```bash
+git clone https://github.com/SpryFinance/spry-interface
+cd spry-interface
+bun install
+bun web dev        # serves the app at http://localhost:3000
+```
+
 ## For liquidity providers
 
 You provide liquidity through Uniswap's canonical V4 **`PositionManager`**: no custom Spry LP contract, no new token to hold. Your position is a standard ERC-721, with per-position fee accounting handled by V4. The dynamic fee simply means a larger share of arbitrage flow accrues to you.
 
+In practice you never touch the contracts directly: the [Spry app](#the-spry-app) handles the whole lifecycle. Connect a wallet, pick a pair and tier, and add, collect, or withdraw liquidity, with each pool's dynamic fee and risk zones shown inline.
+
 ## For traders & integrators
 
-Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them**, and the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support.
+Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them**, and the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support, and the [Spry app](#the-spry-app) exposes a Swap tab over Base Sepolia.
 
 ## For developers
 
-Everything is in **[`spry-contracts`](https://github.com/SpryFinance/spry-contracts)** (Foundry, Solidity ^0.8.26).
+The protocol lives in **[`spry-contracts`](https://github.com/SpryFinance/spry-contracts)** (Foundry, Solidity ^0.8.26).
 
 ```bash
 git clone https://github.com/SpryFinance/spry-contracts
@@ -69,17 +91,20 @@ forge test         # 264 tests across unit / integration / scenarios / fuzz / fo
 
 **Core surface:** `SpryHook` (dispatch + per-pool cumulative state), `SpryRouter` (swap-only), and the `SmartFeeLib` / `SpryFeeTypes` / `VirtualReserves` libraries.
 
+The web client is **[`spry-interface`](https://github.com/SpryFinance/spry-interface)** (see [The Spry app](#the-spry-app) to run it), and on-chain data is served by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)**.
+
 ## Data & analytics
 
-On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)**, a fork of Uniswap's `v4-subgraph` that captures Spry pools, per-swap dynamic fees, tier stats, and the hook's `SpryFee` telemetry (signed cumulative · zone · dispatch case). Query pools, swaps, and fee distributions over GraphQL.
+On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)**, a fork of Uniswap's `v4-subgraph` that captures Spry pools, per-swap dynamic fees, tier stats, and the hook's `SpryFee` telemetry (signed cumulative · zone · dispatch case). Query pools, swaps, and fee distributions over GraphQL. The app reads your positions, live tier stats, and per-pool fee history from it.
 
 ## Project status
 
-> ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
+> ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**. The app and subgraph run on **Base Sepolia only**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
 
 ## Resources
 
 - 📄 **Whitepaper**: [PDF](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.pdf) (print-ready, with figures) · [Markdown](https://github.com/SpryFinance/spry-contracts/blob/main/assets/Spry-Whitepaper.md) (renders on GitHub)
+- 🖥️ **Interface**: [`spry-interface`](https://github.com/SpryFinance/spry-interface)
 - 💻 **Contracts**: [`spry-contracts`](https://github.com/SpryFinance/spry-contracts)
 - 📊 **Subgraph**: [`spry-subgraph`](https://github.com/SpryFinance/spry-subgraph)
 
