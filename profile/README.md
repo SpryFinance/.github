@@ -48,7 +48,7 @@ The full derivation lives in the whitepaper: [PDF](https://github.com/SpryFinanc
 
 ## The Spry app
 
-[`spry-interface`](https://github.com/SpryFinance/spry-interface) is a Spry-native fork of the Uniswap interface, trimmed to Uniswap V4 and wired to run on **Unichain & Base Sepolia**. It is a complete LP and trading surface for Spry pools, with no extra contracts to learn:
+[`spry-interface`](https://github.com/SpryFinance/spry-interface) is a Spry-native fork of the Uniswap interface, trimmed to Uniswap V4 and wired to run on **Unichain Sepolia & Base Sepolia**. It is a complete LP and trading surface for Spry pools, with no extra contracts to learn:
 
 - **Provide liquidity, end to end.** Open a position in an existing Spry pool or create a brand-new pool, then add, remove, and collect fees, all on Uniswap V4 through the canonical `PositionManager` and Permit2.
 - **Your positions, live.** Balances, uncollected fees, and status are read straight from the chain and the subgraph, each shown with its dynamic-fee tier and the pool's "alert" and "danger" zone counts.
@@ -73,7 +73,7 @@ In practice you never touch the contracts directly: the [Spry app](#the-spry-app
 
 ## For traders & integrators
 
-Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them**, and the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support, and the [Spry app](#the-spry-app) exposes a Swap tab over Unichain & Base Sepolia.
+Spry pools are ordinary V4 pools. **Any V4-aware router or aggregator can trade against them**, and the hook prices each swap automatically. Spry also ships a thin **swap-only router** with native-ETH, multi-hop, and Permit2 support, and the [Spry app](#the-spry-app) exposes a Swap tab over Unichain Sepolia & Base Sepolia.
 
 ## For developers
 
@@ -99,7 +99,7 @@ On-chain activity is indexed by **[`spry-subgraph`](https://github.com/SpryFinan
 
 ## Project status
 
-> ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**. The app and subgraph run on **Unichain & Base Sepolia only**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
+> ⚠️ **Pre-production.** The contracts are extensively tested (264 passing tests, ~100% library coverage, stateful invariant fuzzing) but **not yet externally audited**. The app and subgraph run on **Unichain Sepolia & Base Sepolia only**, and there is **no mainnet deployment**. Do not use with material funds until an independent audit is complete.
 
 ## Resources
 
